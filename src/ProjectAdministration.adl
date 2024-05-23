@@ -49,7 +49,7 @@ CONTEXT "ProjectAdministration" IN ENGLISH
     , "Name"          : projectName
     , "Description"   : projectDescription
     , "Projectleider" : pl
-    , "@"             : pl[Project*Person]
+    , "Email"         : pl[Project*Person]
     , "Start"         : projectStartDate
     , "Status"        : projectStatus
     , "Active"        : projectActive
