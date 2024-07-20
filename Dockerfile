@@ -1,22 +1,23 @@
-FROM ampersandtarski/prototype-framework:v1
+FROM prototype:new_frontend
 
 COPY src /usr/local/project/
-COPY templates /usr/local/project/templates/
 
 COPY ./ampersand /usr/local/bin/ampersand
 RUN chmod +x /usr/local/bin/ampersand
-
-# Generate prototype application from folder
-RUN ampersand proto /usr/local/project/ProjectAdministration.adl \
-  --proto-dir /var/www \
+# Run ampersand compiler to generated new frontend and backend json model files (in generics folder)
+RUN ampersand proto --no-frontend /usr/local/project/ProjectAdministration.adl \
+  --proto-dir /var/www/backend \
   --crud-defaults cRud \
   --verbose
 
-COPY customizations /var/www/
+RUN ampersand proto --frontend-version Angular --no-backend /usr/local/project/ProjectAdministration.adl \
+  --proto-dir /var/www/frontend/src/app/generated \
+  --crud-defaults cRud \
+  --verbose
 
-RUN chown -R www-data:www-data /var/www/data
-  # && cd /var/www \
-  # && composer install --prefer-dist --no-dev --profile \
-  # && npm install \
-  # && gulp build-ampersand \
-  # && gulp build-project
+WORKDIR /var/www/frontend
+
+RUN npx ng build
+
+# Copy output from frontend build
+RUN cp -r /var/www/frontend/dist/prototype-frontend/* /var/www/html

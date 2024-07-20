@@ -61,7 +61,7 @@ RULE aapr1 : I[aap.Person] |- aap.personFirstName;aap.personFirstName~
     , "Name"          : projectName
     , "Description"   : projectDescription
     , "Projectleider" : pl
-    , "@"             : pl[Project*Person]
+    , "Email"         : pl[Project*Person]
     , "Start"         : projectStartDate
     , "Status"        : projectStatus
     , "Active"        : projectActive
