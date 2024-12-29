@@ -106,6 +106,12 @@ RULE aapr1 : I[aap.Person] |- aap.personFirstName;aap.personFirstName~
     , "Email"           : personEmail
     , "Projects"        : member~ 
     ]
+
+  POPULATION PrototypeContext.label[PrototypeContext.Role*PrototypeContext.Label] 
+  CONTAINS [("Administrator", "Administrator")
+            ,("Planner", "Planner")
+            ,("SYSTEM", "SYSTEM")
+            ,("Projectleader", "Projectleader")]
   
   VIEW ProjectName : Project DEFAULT { name : projectName } ENDVIEW
   VIEW PersonName  : Person DEFAULT { firstName : personFirstName, txt1: TXT " ", lastName : personLastName } ENDVIEW
